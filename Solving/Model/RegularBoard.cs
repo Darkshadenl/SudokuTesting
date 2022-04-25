@@ -9,103 +9,120 @@ public class RegularBoard : AbstractBoard
 
     public RegularBoard()
     {
-        Stack<Stack<int>> stack = CreateValues();
-        CreateBoard(stack);
-
-        var e = board.ElementAt(0).ElementAt(0).boardBox;
-        // var solved = Solve();
-        
+        var queue = CreateValues();
+        CreateBoard(queue);
+        Solve();
         PrintBoard();
     }
-    
+
     private bool Solve()
     {
-        Cell? find = FindEmpty();
-        
-        if (find == null)
+        Cell? cellNoNumber = FindEmpty();
+
+        if (cellNoNumber == null)
         {
             return true;
         }
 
-        for (int i = 1; i < 10; i++)
+        for (int targetNumber = 1; targetNumber < 10; targetNumber++) // 1 to 9
         {
-            if (Valid(find, i))
+            if (Valid(cellNoNumber, targetNumber))
             {
-                find.Value = i;
+                cellNoNumber.Value = targetNumber;
 
                 if (Solve())
                     return true;
 
-                find.Value = 0;
+                cellNoNumber.Value = 0;
             }
         }
+
         return false;
     }
 
     private bool Valid(Cell emptyCell, int number)
     {
         var row = board.ElementAt(emptyCell.Y);
-
-        if (row.Where((cell, i) => cell.Value == number && cell.X != i).Any())
+        
+        foreach (var cell in row)
         {
-            return false;
+            if (cell.Value == number && !cell.Equals(emptyCell))
+            {
+                return false;
+            }
         }
 
         for (int i = 0; i < board.Count; i++)
         {
-            var colCell = board.ElementAt(i).ElementAt(emptyCell.X);
-            if (colCell.Value == number && emptyCell.Y != i)
+            var cell = board.ElementAt(i).ElementAt(emptyCell.X);
+            if (cell.Value == number && !cell.Equals(emptyCell))
             {
                 return false;
             }
         }
 
         var emptyCellBoardBox = emptyCell.boardBox; // x, y of containing box
+        List<Cell> cellsOfMatchingBox = new();
 
-        foreach (var cells in board)
+        foreach (List<Cell> cells in board)
         {
-            foreach (var cell in cells)
+            foreach (Cell cell in cells)
             {
-                var cellXBoardBox = cell.boardBox[0];
-                var cellYBoardBox = cell.boardBox[1];
-                
-                if (cellXBoardBox == emptyCellBoardBox[0]       // check if horizontally in same box
-                    && cellYBoardBox == emptyCellBoardBox[1]    // check if vertically in same box
-                    && cell.Value == number                     // 
-                    && cell.X != emptyCell.X 
-                    && cell.Y != emptyCell.Y)
+                if (cell.boardBox[0] == emptyCellBoardBox[0] && cell.boardBox[1] == emptyCellBoardBox[1])
                 {
-                    return false;
+                    cellsOfMatchingBox.Add(cell);
                 }
             }
         }
 
+        foreach (var cell in cellsOfMatchingBox)
+        {
+            if (cell.Value == number && !cell.Equals(emptyCell))
+            {
+                return false;
+            }
+        }
+        
         return true;
     }
 
     private Cell? FindEmpty()
     {
-        return board.SelectMany(list => list).FirstOrDefault(cell => cell.isEmpty());
+        foreach (List<Cell> cells in board)
+        {
+            foreach (Cell cell in cells)
+            {
+                if (cell.Value == 0)
+                {
+                    return cell;
+                }
+            }
+        }
+
+        return null;
     }
 
-    private void CreateBoard(Stack<Stack<int>> stack)
+    private void CreateBoard(Queue<Queue<int>> queue)
     {
-        var stackCount = stack.Count;
-        
-        for (int i = 0; i < stackCount; i++)
+        var queueCount = queue.Count;
+        var verticalLine = 0;
+
+        for (int i = 0; i < queueCount; i++)
         {
-            Stack<int> rowStack = stack.Pop();
+            Queue<int> rowQueue = queue.Dequeue();
             var row = new List<Cell>();
             var cell = new Cell(boardSize);
-            List<Cell> cells = cell.CreateCellToYourRight(rowStack, row, stackCount - i);
+            List<Cell> cells = cell.CreateCellToYourRight(rowQueue, row, verticalLine, 0);
             board.Add(cells);
+            verticalLine += 1;
         }
     }
 
-    private Stack<Stack<int>> CreateValues()
+    private Queue<Queue<int>> CreateValues()
     {
         // 8 hoog 9 breed
-        int[][] boardArray = {
+        int[][] boardArray =
+        {
             new[] {7, 8, 0, 4, 0, 0, 1, 2, 0},
             new[] {6, 0, 0, 0, 7, 5, 0, 0, 9},
             new[] {0, 0, 0, 6, 0, 1, 0, 7, 8},
@@ -114,29 +131,38 @@ public class RegularBoard : AbstractBoard
             new[] {9, 0, 4, 0, 6, 0, 0, 0, 5},
             new[] {0, 7, 0, 3, 0, 0, 0, 1, 2},
             new[] {1, 2, 0, 0, 0, 7, 4, 0, 0},
+            new[] {0, 4, 9, 2, 0, 6, 0, 0, 7}
         };
-        
-        var stack = new Stack<Stack<int>>();
+
+        // var stack = new Stack<Stack<int>>();
+        var queue = new Queue<Queue<int>>();
 
         for (int i = 0; i < boardArray.Length; i++)
-        { 
-            var tempStack = new Stack<int>();
+        {
+            var tempQueue = new Queue<int>();
             for (int j = 0; j < boardArray[i].Length; j++)
             {
-                tempStack.Push(boardArray[i][j]);
+                tempQueue.Enqueue(boardArray[i][j]);
+                // tempStack.Push(boardArray[i][j]);
             }
-            stack.Push(tempStack);
+
+            queue.Enqueue(tempQueue);
         }
 
-        return stack;
+        return queue;
     }
 
     private void PrintBoard()
     {
         var horC = 0;
         var verC = 0;
+        var horizontalLine = "-------------------------";
+
+        Console.WriteLine(horizontalLine);
         foreach (var cells in board)
         {
+            verC += 1;
+            Console.Write("| ");
             for (int i = 0; i < cells.Count; i++)
             {
                 Console.Write(cells.ElementAt(i).Value);
@@ -147,11 +173,16 @@ public class RegularBoard : AbstractBoard
                     Console.Write("| ");
                     horC = 0;
                 }
-                
+            }
+
+            if (verC == 3)
+            {
+                Console.WriteLine();
+                Console.Write(horizontalLine);
+                verC = 0;
             }
 
             horC = 0;
-
             Console.WriteLine();
         }
     }
