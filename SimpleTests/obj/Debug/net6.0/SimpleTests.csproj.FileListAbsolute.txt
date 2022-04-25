@@ -1,0 +1,15 @@
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\bin\Debug\net6.0\SimpleTests.exe
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\bin\Debug\net6.0\SimpleTests.deps.json
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\bin\Debug\net6.0\SimpleTests.runtimeconfig.json
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\bin\Debug\net6.0\SimpleTests.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\bin\Debug\net6.0\SimpleTests.pdb
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\SimpleTests.csproj.AssemblyReference.cache
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\SimpleTests.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\SimpleTests.AssemblyInfoInputs.cache
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\SimpleTests.AssemblyInfo.cs
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\SimpleTests.csproj.CoreCompileInputs.cache
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\SimpleTests.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\refint\SimpleTests.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\SimpleTests.pdb
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\SimpleTests.genruntimeconfig.cache
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\ref\SimpleTests.dll
