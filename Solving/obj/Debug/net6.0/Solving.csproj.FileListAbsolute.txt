@@ -1,0 +1,15 @@
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\bin\Debug\net6.0\Solving.exe
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\bin\Debug\net6.0\Solving.deps.json
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\bin\Debug\net6.0\Solving.runtimeconfig.json
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\bin\Debug\net6.0\Solving.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\bin\Debug\net6.0\Solving.pdb
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\Solving.csproj.AssemblyReference.cache
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\Solving.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\Solving.AssemblyInfoInputs.cache
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\Solving.AssemblyInfo.cs
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\Solving.csproj.CoreCompileInputs.cache
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\Solving.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\refint\Solving.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\Solving.pdb
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\Solving.genruntimeconfig.cache
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\ref\Solving.dll

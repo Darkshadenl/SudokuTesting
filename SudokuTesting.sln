@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Solving", "Solving\Solving.csproj", "{7D8DFBD2-419F-4E55-B3C4-784B14DE893C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SudokuFactoryTesting", "..\SudokuFactoryTesting\SudokuFactoryTesting.csproj", "{2E96815E-1388-4682-9101-BBE998E6E2F6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D8DFBD2-419F-4E55-B3C4-784B14DE893C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D8DFBD2-419F-4E55-B3C4-784B14DE893C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E96815E-1388-4682-9101-BBE998E6E2F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E96815E-1388-4682-9101-BBE998E6E2F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E96815E-1388-4682-9101-BBE998E6E2F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E96815E-1388-4682-9101-BBE998E6E2F6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
