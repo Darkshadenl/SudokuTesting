@@ -1,5 +1,6 @@
 ﻿int[] numbers = new[]
 {
+    0,
     1,
     2,
     3,
@@ -8,11 +9,11 @@
     6,
     7,
     8,
-    9
 };
 
 foreach(var n in numbers)
 {
+    Console.Write(n + " ");
     Console.WriteLine(n % 3);
 }
 

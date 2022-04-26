@@ -1,3 +1,3 @@
 ﻿using Solving.Model;
 
-AbstractBoard board = new RegularBoard();
+AbstractBoard board = new RegularBoard(new Solver());

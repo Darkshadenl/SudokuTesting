@@ -1,4 +1,6 @@
-﻿namespace Solving.Model;
+﻿using Solving.Model.Components;
+
+namespace Solving.Model;
 
 public abstract class AbstractBoard
 {
