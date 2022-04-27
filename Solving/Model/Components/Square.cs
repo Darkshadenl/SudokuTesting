@@ -2,9 +2,20 @@
 
 public class Square : Component
 {
-    public Square(int squareNumber)
+    public int CoordinateX { get; }
+    public int CoordinateY { get; }
+
+    public Square(int coordinateX, int coordinateY)
     {
-        _id  = squareNumber;
+        CoordinateX = coordinateX;
+        CoordinateY = coordinateY;
+    }
+    public override void PrintSelf()
+    {
+        foreach (var component in _components)
+        {
+            component.PrintSelf();
+        }
     }
 
 }

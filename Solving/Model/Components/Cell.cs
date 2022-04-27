@@ -26,33 +26,39 @@ public class Cell : Component
         return false;
     }
 
-    public override bool IsEmpty()
-    {
-        return Value == 0;
-    }
-
     public override void PrintSelf()
     {
         Console.Write($" {Value} ");
     }
     
-    public override void PrintSelfId()
+    public override void PrintId()
     {
         Console.WriteLine("Cell component has no id(ea)");
     }
 
+    public override bool HasEmptyCell()
+    {
+        return Value == 0;
+    }
+
+    public override Cell? FindEmptyCell()
+    {
+        if (Value == 0) return this;
+        return null;
+    }
+
     public bool IsCellValueDuplicateInRow(int number)
     {
-        return Row.DoesHaveDuplicate(this, number);
+        return Row.HasDuplicate(this, number);
     }
 
     public bool IsCellValueDuplicateInColumn(int number)
     {
-        return Column.DoesHaveDuplicate(this, number);
+        return Column.HasDuplicate(this, number);
     }
 
     public bool IsCellValueDuplicateInSquare(int number)
     {
-        return Square.DoesHaveDuplicate(this, number);
+        return Square.HasDuplicate(this, number);
     }
 }

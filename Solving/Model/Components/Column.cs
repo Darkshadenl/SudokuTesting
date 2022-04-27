@@ -6,5 +6,5 @@ public class Column : Component
     {
         _id = columnNumber;
     }
-    
+
 }

@@ -32,18 +32,11 @@ public class SudokuBoard : Component
     {
         foreach (var component in _components)
         {
-            if (component is not Cell cell) continue;
-            if (cell.Value == 0) return cell;
+            if (component.HasEmptyCell())
+            {
+                return component.FindEmptyCell();
+            }
         }
         return null;
-    }
-
-    public void PrintSquaresIds()
-    {
-        foreach (var component in _components)
-        {
-            if (component is not Square square) continue;
-            square.PrintSelfId();
-        }
     }
 }

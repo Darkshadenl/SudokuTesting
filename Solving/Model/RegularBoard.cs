@@ -6,30 +6,35 @@ namespace Solving.Model;
 public class RegularBoard : AbstractBoard
 {
     private SudokuBoard _sudokuBoard;
-    private Solver _solver;
 
     public RegularBoard(Solver solver)
     {
+        _solver = solver;
+        _sudokuBoard = new SudokuBoard();
+
         var values = CreateValues();
         CreateBoard(values);
         PrintBoard();
-
-        _solver = solver;
         _solver.SudokuBoard = _sudokuBoard;
         var board = _solver.SolveBoard();
-        
-        PrintBoard(board);
+        if (board != null)
+        {
+            PrintBoard(board);
+        }
+        else
+        {
+            Console.WriteLine("No solution found");
+        }
     }
     private void CreateBoard(int[][] mdArray)
     {
-        _sudokuBoard = new SudokuBoard();
-        var squareLeft = new Square(0);
-        var squareMiddle = new Square(1);
-        var squareRight = new Square(2);
-        int squares = 2;
         var columns = new Column[mdArray[0].Length];
         var rows = new Row[mdArray.Length];
-        var squaress = new Square[mdArray.Length * mdArray[0].Length];
+        var squares = new Square[mdArray.Length / 3][];
+        squares[0] = new Square[mdArray.Length / 3];
+        squares[1] = new Square[mdArray.Length / 3];
+        squares[2] = new Square[mdArray.Length / 3];
+       
         
         // create rows, cols and squares
         for (int i = 0; i < mdArray.Length; i++)
@@ -41,6 +46,9 @@ public class RegularBoard : AbstractBoard
             
             for (int j = 0; j < mdArray[i].Length; j++)
             {
+                var c = j;
+                var r = i;
+                Square activeSquare;
                 if (columns[j] == null)
                 {
                     columns[j] = new Column(j);
@@ -53,33 +61,15 @@ public class RegularBoard : AbstractBoard
                 columns[j].Add(cell);
                 cell.Row = rows[i];
                 cell.Column = columns[j];
-                
-                switch (j)
+
+                activeSquare = squares[i % 3][j % 3];
+                if (activeSquare == null)
                 {
-                    case <= 2:
-                        squareLeft.Add(cell);
-                        cell.Square = squareLeft;
-                        break;
-                    case > 2 and <= 5:
-                        squareMiddle.Add(cell);
-                        cell.Square = squareMiddle;
-                        break;
-                    default:
-                        squareRight.Add(cell);
-                        cell.Square = squareRight;
-                        break;
+                    activeSquare = new Square(i % 3, j % 3);
+                    squares[i % 3][j % 3] = activeSquare;
                 }
-            }
-            
-            if (i is 2 or 5)
-            {
-                _sudokuBoard.Add(squareLeft);
-                _sudokuBoard.Add(squareMiddle);
-                _sudokuBoard.Add(squareRight);
-                
-                squareLeft = new Square(++squares);
-                squareMiddle = new Square(++squares);
-                squareRight = new Square(++squares);
+                activeSquare.Add(cell);
+                cell.Square = activeSquare;
             }
         }
         foreach (var column in columns)
@@ -91,10 +81,14 @@ public class RegularBoard : AbstractBoard
         {
             _sudokuBoard.Add(row);
         }
-        
-        _sudokuBoard.Add(squareLeft);
-        _sudokuBoard.Add(squareMiddle);
-        _sudokuBoard.Add(squareRight);
+
+        foreach (var square in squares)
+        {
+            foreach (var square1 in square)
+            {
+                _sudokuBoard.Add(square1);
+            }
+        }
     }
 
     private int[][] CreateValues()

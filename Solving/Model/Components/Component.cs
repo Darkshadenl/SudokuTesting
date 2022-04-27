@@ -4,11 +4,6 @@ public abstract class Component
 {
     protected List<Component> _components = new ();
     protected int _id = -1;
-    
-    public virtual bool IsEmpty()
-    {
-        return _components.Count == 0;
-    }
 
     public virtual void Add(Component c)
     {
@@ -22,19 +17,23 @@ public abstract class Component
 
     public virtual void PrintSelf()
     {
-        throw new NotImplementedException();
+        foreach (var component in _components)
+        {
+            component.PrintSelf();
+        }
     }
     
-    public virtual void PrintSelfId()
+    public virtual void PrintId()
     {
         Console.WriteLine(_id);
     }
     
-    public virtual bool DoesHaveDuplicate(Cell cell, int number)
+    public virtual bool HasDuplicate(Cell cell, int number)
     {
         foreach (Component component in _components)
         {
-            if (component is not Cell c) continue;
+            if (component.IsComposite()) continue;
+            var c = (Cell) component;
             if (c.Equals(cell)) continue;
             if (c.Value == number) return true;
         }
@@ -42,4 +41,32 @@ public abstract class Component
         return false;
     }
 
+    public virtual bool HasEmptyCell()
+    {
+        foreach (var component in _components)
+        {
+            var isEmpty = component.HasEmptyCell();
+            if (isEmpty)
+            {
+                return isEmpty;
+            }
+        }
+
+        return false;
+    }
+
+    public virtual Cell? FindEmptyCell()
+    {
+        Cell emptyCell = null;
+        foreach (var component in _components)
+        {
+            var maybeEmpty = component.FindEmptyCell();
+            if (maybeEmpty != null)
+            {
+                emptyCell = maybeEmpty;
+            }
+        }
+
+        return emptyCell;
+    }
 }

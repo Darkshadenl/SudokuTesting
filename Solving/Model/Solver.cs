@@ -11,6 +11,9 @@ public class Solver
         var solved = Solve();
         if (solved)
         {
+            SudokuBoard.PrintSelf();
+            Console.WriteLine();
+            Console.WriteLine();
             return SudokuBoard;
         }
         return null;
