@@ -10,12 +10,5 @@ public class Square : Component
         CoordinateX = coordinateX;
         CoordinateY = coordinateY;
     }
-    public override void PrintSelf()
-    {
-        foreach (var component in _components)
-        {
-            component.PrintSelf();
-        }
-    }
 
 }

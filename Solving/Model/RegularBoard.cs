@@ -5,29 +5,16 @@ namespace Solving.Model;
 
 public class RegularBoard : AbstractBoard
 {
-    private SudokuBoard _sudokuBoard;
     private Solver _solver;
 
     public RegularBoard(Solver solver)
     {
         _solver = solver;
         _sudokuBoard = new SudokuBoard();
-        _solver.SudokuBoard = _sudokuBoard;
-
-        // var values = CreateValues();
-        // CreateBoard(values);
-        // PrintBoard();
-        // var board = _solver.SolveBoard();
-        // if (board != null)
-        // {
-        //     PrintBoard(board);
-        // }
-        // else
-        // {
-        //     Console.WriteLine("No solution found");
-        // }
+        _solver.SudokuBoard = _sudokuBoard;  
     }
-    public override AbstractBoard CreateBoard(int[][] mdArray)
+    
+    public AbstractBoard CreateBoard(int[][] mdArray)
     {
         var columns = new Column[mdArray[0].Length];
         var rows = new Row[mdArray.Length];

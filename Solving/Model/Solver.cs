@@ -4,16 +4,13 @@ namespace Solving.Model;
 
 public class Solver
 {
-    public SudokuBoard SudokuBoard { get; set; }
+    public Component SudokuBoard { get; set; }
 
-    public SudokuBoard SolveBoard()
+    public Component SolveBoard()
     {
         var solved = Solve();
         if (solved)
         {
-            SudokuBoard.PrintSelf();
-            Console.WriteLine();
-            Console.WriteLine();
             return SudokuBoard;
         }
         return null;

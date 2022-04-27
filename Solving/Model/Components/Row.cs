@@ -7,27 +7,15 @@ public class Row : Component
         _id = rowNumber;
     }
 
-    public override void PrintSelf()
+    public List<Component> GetData()
     {
-        var horC = 0;
-        
-        Console.Write("|");
-        for (var index = 0; index < _components.Count; index++)
+        var data = new List<Component>();
+        foreach (var cell in _components)
         {
-            horC += 1;
-            var component = _components[index];
-            
-            if (!component.IsComposite())
-            {
-                component.PrintSelf();
-            }
-            
-            if (horC == 3)
-            {
-                Console.Write("|");
-                horC = 0;
-            }
+            if (cell is not Cell c) continue;
+            data.Add(c);
         }
+
+        return data;
     }
-    
 }

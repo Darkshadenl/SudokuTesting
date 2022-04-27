@@ -15,7 +15,8 @@ InterpretBoard interpret = new InterpretBoard();
 var abstractBoard = interpret.InterpretBoardFile(boardFile);
 
 
-GameView view = new GameView();
-view.Board = abstractBoard;
+IBoardView view = new GameView();
+view.PrintBoardVisitor = new PrintBoardVisitor();
+
 
 

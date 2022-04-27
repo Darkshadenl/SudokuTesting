@@ -4,10 +4,10 @@ namespace Solving.Model;
 
 public abstract class AbstractBoard
 {
-    public abstract AbstractBoard CreateBoard(int[][] mdArray);
-    public virtual void GetBoardData()
+    protected Component _sudokuBoard;
+    public virtual List<List<Component>> GetBoardData()
     {
-        
+        return _sudokuBoard.GetAllData();
     }
 
 }

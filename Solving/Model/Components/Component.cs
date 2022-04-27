@@ -15,14 +15,6 @@ public abstract class Component
         return true;
     }
 
-    // public virtual void PrintSelf()
-    // {
-    //     foreach (var component in _components)
-    //     {
-    //         component.PrintSelf();
-    //     }
-    // }
-    
     public virtual void PrintId()
     {
         Console.WriteLine(_id);
@@ -68,5 +60,19 @@ public abstract class Component
         }
 
         return emptyCell;
+    }
+
+    public List<List<Component>> GetAllData()
+    {
+        List<List<Component>> rows = new ();
+        foreach (var component in _components)
+        {
+            if (component is not Row r) continue;
+            
+            var data = r.GetData();
+            rows.Add(data);
+        }
+
+        return rows;
     }
 }
