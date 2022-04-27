@@ -26,36 +26,48 @@ public class RegularBoard : AbstractBoard
         var squareLeft = new Square(0);
         var squareMiddle = new Square(1);
         var squareRight = new Square(2);
-        int rows = 0;
-        int cols = 0;
         int squares = 2;
+        var columns = new Column[mdArray[0].Length];
+        var rows = new Row[mdArray.Length];
+        var squaress = new Square[mdArray.Length * mdArray[0].Length];
         
-        // create rows and squares
+        // create rows, cols and squares
         for (int i = 0; i < mdArray.Length; i++)
         {
-            var row = new Row(rows);
+            if (rows[i] == null)
+            {
+                rows[i] = new Row(i);
+            }
             
             for (int j = 0; j < mdArray[i].Length; j++)
             {
+                if (columns[j] == null)
+                {
+                    columns[j] = new Column(j);
+                }
+                
                 int value = mdArray[i][j];
                 var cell = new Cell(value, j, i);
-                row.Add(cell);
-                cell.Row = row;
-
-                if (j <= 2)
+                
+                rows[i].Add(cell);
+                columns[j].Add(cell);
+                cell.Row = rows[i];
+                cell.Column = columns[j];
+                
+                switch (j)
                 {
-                    squareLeft.Add(cell);
-                    cell.Square = squareLeft;
-                }
-                else if (j is > 2 and <= 5)
-                {
-                    squareMiddle.Add(cell);
-                    cell.Square = squareMiddle;
-                }
-                else
-                {
-                    squareRight.Add(cell);
-                    cell.Square = squareRight;
+                    case <= 2:
+                        squareLeft.Add(cell);
+                        cell.Square = squareLeft;
+                        break;
+                    case > 2 and <= 5:
+                        squareMiddle.Add(cell);
+                        cell.Square = squareMiddle;
+                        break;
+                    default:
+                        squareRight.Add(cell);
+                        cell.Square = squareRight;
+                        break;
                 }
             }
             
@@ -69,29 +81,20 @@ public class RegularBoard : AbstractBoard
                 squareMiddle = new Square(++squares);
                 squareRight = new Square(++squares);
             }
+        }
+        foreach (var column in columns)
+        {
+            _sudokuBoard.Add(column);
+        }
+
+        foreach (var row in rows)
+        {
             _sudokuBoard.Add(row);
         }
         
         _sudokuBoard.Add(squareLeft);
         _sudokuBoard.Add(squareMiddle);
         _sudokuBoard.Add(squareRight);
-        
-        int horizontalLength = mdArray.Length;
-        int verticalLength = mdArray[0].Length;
-
-        // create columns
-        for (int j = 0; j < horizontalLength; j++)
-        {
-            var col = new Column(cols);
-            for (int i = 0; i < verticalLength; i++)
-            {
-                var value = mdArray[i][j];
-                var cell = new Cell(value, j, i);
-                col.Add(cell);
-                cell.Column = col;
-            }
-            _sudokuBoard.Add(col);
-        }
     }
 
     private int[][] CreateValues()
