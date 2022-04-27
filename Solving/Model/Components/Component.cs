@@ -15,13 +15,13 @@ public abstract class Component
         return true;
     }
 
-    public virtual void PrintSelf()
-    {
-        foreach (var component in _components)
-        {
-            component.PrintSelf();
-        }
-    }
+    // public virtual void PrintSelf()
+    // {
+    //     foreach (var component in _components)
+    //     {
+    //         component.PrintSelf();
+    //     }
+    // }
     
     public virtual void PrintId()
     {

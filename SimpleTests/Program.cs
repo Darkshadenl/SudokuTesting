@@ -7,14 +7,13 @@
     4,
     5,
     6,
-    7,
-    8,
+    7
 };
 
 foreach(var n in numbers)
 {
     Console.Write(n + " ");
-    Console.WriteLine(n % 3);
+    Console.WriteLine(n % 4);
 }
 
 // 1, 1 = 1,1
