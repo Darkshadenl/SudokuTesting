@@ -1,126 +1,99 @@
 ﻿using System.Collections;
+using Solving.Model.Components;
 
 namespace Solving.Model;
 
 public class RegularBoard : AbstractBoard
 {
-    private List<List<Cell>> board = new();
-    private int[] boardSize = {9, 8};
+    private SudokuBoard _sudokuBoard;
 
-    public RegularBoard()
+    public RegularBoard(Solver solver)
     {
-        var queue = CreateValues();
-        CreateBoard(queue);
-        Solve();
+        _solver = solver;
+        _sudokuBoard = new SudokuBoard();
+
+        var values = CreateValues();
+        CreateBoard(values);
         PrintBoard();
-    }
-
-    private bool Solve()
-    {
-        Cell? cellNoNumber = FindEmpty();
-
-        if (cellNoNumber == null)
+        _solver.SudokuBoard = _sudokuBoard;
+        var board = _solver.SolveBoard();
+        if (board != null)
         {
-            return true;
+            PrintBoard(board);
         }
-
-        for (int targetNumber = 1; targetNumber < 10; targetNumber++) // 1 to 9
+        else
         {
-            if (Valid(cellNoNumber, targetNumber))
-            {
-                cellNoNumber.Value = targetNumber;
-
-                if (Solve())
-                    return true;
-
-                cellNoNumber.Value = 0;
-            }
+            Console.WriteLine("No solution found");
         }
-
-        return false;
     }
-
-    private bool Valid(Cell emptyCell, int number)
+    private void CreateBoard(int[][] mdArray)
     {
-        var row = board.ElementAt(emptyCell.Y);
+        var columns = new Column[mdArray[0].Length];
+        var rows = new Row[mdArray.Length];
+        var squares = new Square[mdArray.Length / 3][];
+        squares[0] = new Square[mdArray.Length / 3];
+        squares[1] = new Square[mdArray.Length / 3];
+        squares[2] = new Square[mdArray.Length / 3];
+       
         
-        foreach (var cell in row)
+        // create rows, cols and squares
+        for (int i = 0; i < mdArray.Length; i++)
         {
-            if (cell.Value == number && !cell.Equals(emptyCell))
+            if (rows[i] == null)
             {
-                return false;
+                rows[i] = new Row(i);
             }
-        }
-
-        for (int i = 0; i < board.Count; i++)
-        {
-            var cell = board.ElementAt(i).ElementAt(emptyCell.X);
-            if (cell.Value == number && !cell.Equals(emptyCell))
+            
+            for (int j = 0; j < mdArray[i].Length; j++)
             {
-                return false;
-            }
-        }
-
-        var emptyCellBoardBox = emptyCell.boardBox; // x, y of containing box
-        List<Cell> cellsOfMatchingBox = new();
-
-        foreach (List<Cell> cells in board)
-        {
-            foreach (Cell cell in cells)
-            {
-                if (cell.boardBox[0] == emptyCellBoardBox[0] && cell.boardBox[1] == emptyCellBoardBox[1])
+                var c = j;
+                var r = i;
+                Square activeSquare;
+                if (columns[j] == null)
                 {
-                    cellsOfMatchingBox.Add(cell);
+                    columns[j] = new Column(j);
                 }
-            }
-        }
+                
+                int value = mdArray[i][j];
+                var cell = new Cell(value, j, i);
+                
+                rows[i].Add(cell);
+                columns[j].Add(cell);
+                cell.Row = rows[i];
+                cell.Column = columns[j];
 
-        foreach (var cell in cellsOfMatchingBox)
-        {
-            if (cell.Value == number && !cell.Equals(emptyCell))
-            {
-                return false;
-            }
-        }
-        
-        return true;
-    }
-
-    private Cell? FindEmpty()
-    {
-        foreach (List<Cell> cells in board)
-        {
-            foreach (Cell cell in cells)
-            {
-                if (cell.Value == 0)
+                activeSquare = squares[i % 3][j % 3];
+                if (activeSquare == null)
                 {
-                    return cell;
+                    activeSquare = new Square(i % 3, j % 3);
+                    squares[i % 3][j % 3] = activeSquare;
                 }
+                activeSquare.Add(cell);
+                cell.Square = activeSquare;
             }
         }
-
-        return null;
-    }
-
-    private void CreateBoard(Queue<Queue<int>> queue)
-    {
-        var queueCount = queue.Count;
-        var verticalLine = 0;
-
-        for (int i = 0; i < queueCount; i++)
+        foreach (var column in columns)
         {
-            Queue<int> rowQueue = queue.Dequeue();
-            var row = new List<Cell>();
-            var cell = new Cell(boardSize);
-            List<Cell> cells = cell.CreateCellToYourRight(rowQueue, row, verticalLine, 0);
-            board.Add(cells);
-            verticalLine += 1;
+            _sudokuBoard.Add(column);
+        }
+
+        foreach (var row in rows)
+        {
+            _sudokuBoard.Add(row);
+        }
+
+        foreach (var square in squares)
+        {
+            foreach (var square1 in square)
+            {
+                _sudokuBoard.Add(square1);
+            }
         }
     }
 
-    private Queue<Queue<int>> CreateValues()
+    private int[][] CreateValues()
     {
-        // 8 hoog 9 breed
+        // 9 hoog 9 breed
         int[][] boardArray =
         {
             new[] {7, 8, 0, 4, 0, 0, 1, 2, 0},
@@ -134,56 +107,20 @@ public class RegularBoard : AbstractBoard
             new[] {0, 4, 9, 2, 0, 6, 0, 0, 7}
         };
 
-        // var stack = new Stack<Stack<int>>();
-        var queue = new Queue<Queue<int>>();
-
-        for (int i = 0; i < boardArray.Length; i++)
-        {
-            var tempQueue = new Queue<int>();
-            for (int j = 0; j < boardArray[i].Length; j++)
-            {
-                tempQueue.Enqueue(boardArray[i][j]);
-                // tempStack.Push(boardArray[i][j]);
-            }
-
-            queue.Enqueue(tempQueue);
-        }
-
-        return queue;
+        return boardArray;
     }
 
     private void PrintBoard()
     {
-        var horC = 0;
-        var verC = 0;
-        var horizontalLine = "-------------------------";
-
-        Console.WriteLine(horizontalLine);
-        foreach (var cells in board)
-        {
-            verC += 1;
-            Console.Write("| ");
-            for (int i = 0; i < cells.Count; i++)
-            {
-                Console.Write(cells.ElementAt(i).Value);
-                Console.Write(" ");
-                horC += 1;
-                if (horC == 3)
-                {
-                    Console.Write("| ");
-                    horC = 0;
-                }
-            }
-
-            if (verC == 3)
-            {
-                Console.WriteLine();
-                Console.Write(horizontalLine);
-                verC = 0;
-            }
-
-            horC = 0;
-            Console.WriteLine();
-        }
+        _sudokuBoard.PrintSelf();
+        Console.WriteLine();
+        Console.WriteLine();
+    }
+    
+    private void PrintBoard(SudokuBoard sudokuBoard)
+    {
+        sudokuBoard.PrintSelf();
+        Console.WriteLine();
+        Console.WriteLine();
     }
 }
