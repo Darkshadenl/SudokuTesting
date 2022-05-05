@@ -1,70 +1,50 @@
-﻿using Solving.Model;
-using Solving.Model.Components;
+﻿using Solving.Model.Viewable;
+using Solving.Visitor;
 
 namespace Solving.View;
 
-public interface IBoardView
+public class GameView : IBoardView
 {
-    public IPrintBoardVisitor PrintBoardVisitor { get; set; }
-    public void DrawBoard(AbstractBoard board);
-    public void Clear();
-}
-
-public class GameView 
-{
-    public IPrintBoardVisitor PrintBoardVisitor { get; set; }
-
-    public void Draw()
+    private IPrintBoardVisitor _printBoardVisitor;
+    public GameView(IPrintBoardVisitor printBoardVisitor)
     {
-        
+        _printBoardVisitor = printBoardVisitor;
     }
 
-    public void Clear()
+    public void Accept(IPrintBoardVisitor visitor)
     {
-        // Clear screen
+        _printBoardVisitor = visitor;
     }
-}
 
-public interface IPrintBoardVisitor
-{
-    public void Draw(RegularBoard board);
-}
-
-public class PrintBoardVisitor : IPrintBoardVisitor
-{
-    public void Draw(AbstractBoard board)
+    public void DrawBoard(List<IViewable> boardData)
     {
-        var data = board.GetBoardData();
-
-        var verC = 0;
-        var horizontalLine = "-------------------------------";
-
-        Console.WriteLine(horizontalLine);
+        Console.WriteLine("Press ESC to stop");
+        Draw(boardData);
         
-        // for (var index = 0; index < _components.Count; index++)
-        // {
-        //     Component component = _components[index];
-        //     if (component is not Row) continue;
-        //
-        //     component.PrintSelf();
-        //     Console.WriteLine();
-        //     if (verC == 2)
-        //     {
-        //         Console.WriteLine(horizontalLine);
-        //         verC = 0;
-        //     }
-        //     else
-        //     {
-        //         verC++;
-        //     }
-        // }
-        
-        foreach (var row in data)
-        {
-            foreach (var component in row)
-            {
-                
+        do {
+            while (!Console.KeyAvailable) {
+                switch (Console.ReadKey(true).Key)
+                {
+                    case ConsoleKey.UpArrow:
+                        Draw(boardData);
+                        break;
+                    case ConsoleKey.DownArrow:
+                        Draw(boardData);
+                        break;
+                    case ConsoleKey.RightArrow:
+                        Draw(boardData);
+                        break;
+                    case ConsoleKey.LeftArrow:
+                        Draw(boardData);
+                        break;
+                }
             }
-        }
+        } while (Console.ReadKey(true).Key != ConsoleKey.Escape);
+    }
+
+    private void Draw(List<IViewable> boardData)
+    {
+        Console.Clear();
+        _printBoardVisitor.Draw(boardData);
     }
 }

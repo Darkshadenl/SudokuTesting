@@ -5,5 +5,5 @@ namespace Solving.Factory;
 
 public interface IBoardInterpreterFactory
 {
-    IBoardInterpreter GetInterpreter(BoardFile boardFile);
+    public IBoardInterpreter Create(string interpreter);
 }

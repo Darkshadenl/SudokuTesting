@@ -1,26 +1,41 @@
-﻿using Solving.Import;
+﻿using Newtonsoft.Json;
+using Solving.Config.JSONModel;
+using Solving.Import;
 using Solving.Interpreters;
 
 namespace Solving.Factory;
 
 public class BoardInterpreterFactory : IBoardInterpreterFactory
 {
-    public IBoardInterpreter GetInterpreter(BoardFile boardFile)
+    private Dictionary<string, Func<IBoardInterpreter>>? _interpreters = new();
+ 
+    public BoardInterpreterFactory()
     {
-        switch (boardFile.Extension)
+        var json = File.ReadAllText(Environment.GetEnvironmentVariable("FACTORYCONFIG") ?? 
+                                    "./Config/FactoryConfiguration.json");
+        
+        var deserializeObject = JsonConvert.DeserializeObject<BoardInterpreterRoot>(json);
+        foreach (var boardinterpreter in deserializeObject.boardinterpreter)
         {
-            // case ".4x4":
-            //     return new TextBoardInterpreter();
-            // case ".6x6":
-            //     return new CsvBoardInterpreter();
-            case ".9x9":
-                return new RegularInterpreter();
-            case ".jigsaw":
-                return new JigsawInterpreter();
-            // case ".samurai":
-            //     return new CsvBoardInterpreter();
-            default:
-                throw new ArgumentException("Invalid file extension");
+            var type = Type.GetType($"{boardinterpreter._namespace}");
+            
+            _interpreters!.Add(boardinterpreter.match, () =>
+            {
+                return Activator.CreateInstance(type) as IBoardInterpreter;
+            });
         }
     }
+
+    public IBoardInterpreter Create(string interpreter)
+    {
+        string lookupValue = interpreter.ToLowerInvariant();
+
+        if (_interpreters.TryGetValue(lookupValue, out var interpreterCreator))
+        {
+            return interpreterCreator.Invoke();
+        }
+
+        throw new ArgumentException($"Interpreter {interpreter} not found");
+    }
+    
 }

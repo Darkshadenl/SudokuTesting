@@ -13,3 +13,9 @@ C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\refint\Solvi
 C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\Solving.pdb
 C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\Solving.genruntimeconfig.cache
 C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\ref\Solving.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\bin\Debug\net6.0\DotNetEnv.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\bin\Debug\net6.0\Sprache.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\obj\Debug\net6.0\Solving.csproj.CopyComplete
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\bin\Debug\net6.0\Config\FactoryConfiguration.json
+C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\bin\Debug\net6.0\.env

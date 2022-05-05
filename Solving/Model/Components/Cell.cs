@@ -3,6 +3,7 @@
 public class Cell : Component
 {
     public int Value { get; set; }
+    public List<int> PossibleValues { get; set; }
     public int X { get; private set; }
     public int Y { get; private set; }
     public Row Row { get; set; }

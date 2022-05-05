@@ -19,10 +19,10 @@ public class RegularBoard : AbstractBoard
         var columns = new Column[mdArray[0].Length];
         var rows = new Row[mdArray.Length];
         var squares = new Square[mdArray.Length / 3][];
+        
         squares[0] = new Square[mdArray.Length / 3];
         squares[1] = new Square[mdArray.Length / 3];
         squares[2] = new Square[mdArray.Length / 3];
-       
         
         // create rows, cols and squares
         for (int i = 0; i < mdArray.Length; i++)

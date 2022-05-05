@@ -13,3 +13,6 @@ C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\refint\S
 C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\SimpleTests.pdb
 C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\SimpleTests.genruntimeconfig.cache
 C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\ref\SimpleTests.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\bin\Debug\net6.0\DotNetEnv.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\bin\Debug\net6.0\Sprache.dll
+C:\Users\qmb\Documents\Repos\SudokuTesting\SimpleTests\obj\Debug\net6.0\SimpleTests.csproj.CopyComplete

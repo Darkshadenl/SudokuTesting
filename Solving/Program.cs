@@ -1,6 +1,10 @@
 ﻿using Solving;
+using Solving.Factory;
 using Solving.Import;
 using Solving.View;
+using Solving.Visitor;
+
+DotNetEnv.Env.Load("./.env");
 
 // AbstractBoard board = new RegularBoard(new Solver());
 
@@ -11,12 +15,18 @@ string reg2 = @"C:\Users\qmb\Documents\Repos\SudokuTesting\Solving\Resources\Sud
 
 Import import = new Import();
 var boardFile = import.ImportFromPath(pathRegular);
-InterpretBoard interpret = new InterpretBoard();
+
+IBoardInterpreterFactory f = new BoardInterpreterFactory();
+InterpretBoard interpret = new InterpretBoard(f);
+
 var abstractBoard = interpret.InterpretBoardFile(boardFile);
 
 
-IBoardView view = new GameView();
-view.PrintBoardVisitor = new PrintBoardVisitor();
+IBoardView view = new GameView(new RegularBoardPrintVisitor());
+view.DrawBoard(abstractBoard.GetPrintData());
+
+
+
 
 
 
